@@ -1,0 +1,8 @@
+#!bin/bash
+
+# eth0:3 | 151.80.88.22
+# proxy  | 192.168.122.197
+
+iptables -I FORWARD -o virbr0 -d  192.168.122.197 -j ACCEPT
+# iptables -t nat -I PREROUTING -p tcp -d 151.80.88.22 --dport 80 -j DNAT --to 192.168.122.197:80
+iptables -A PREROUTING -d 151.80.88.22/32 -p tcp -m tcp --dport 0:65535 -j DNAT --to-destination 192.168.122.197:0-65535
